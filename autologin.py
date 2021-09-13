@@ -5,7 +5,7 @@ try:
     link = "https://www.phptravels.net/"
     browser = webdriver.Chrome()
     browser.get(link)
-    time.sleep(3) 
+    time.sleep(3) # ждем пока прогрузится страница
     button = browser.find_element_by_xpath("/html/body/header/div[1]/div/div/div[2]/div/div/a[2]").click() #жмем кнопку логин
 
     login_box = browser.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[2]/div/form/div[1]/div/input').send_keys("user@phptravels.com")#вводим логин
