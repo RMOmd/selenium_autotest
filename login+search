@@ -10,7 +10,7 @@ try:
     link = "https://www.phptravels.net/"
     browser = webdriver.Chrome()
     browser.get(link)
-    browser.set_window_size(1500, 1000)
+    browser.set_window_size(1500, 1000) # размер окна 1500х1000
 
     wait = WebDriverWait(browser, 2)
     wait.until(EC.visibility_of_element_located((By.LINK_TEXT, "Login"))).click() # переходим на страницу логина
