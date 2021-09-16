@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import pyautogui
+import time
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -21,7 +21,7 @@ try:
     browser.find_element_by_xpath('//*[@id="select2-hotels_city-container"]').click() # наводим курсор в строку поиска
     browser.find_element_by_xpath('//span[1]/input').send_keys("Dubai" + Keys.ENTER) # вводим город в строку поиска
 
-    time.sleep(1)
+    time.sleep(1) # переработал код до этого момента.... этот слип не могу заменить... не вижу пока варианты... буду искать...
     wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="select2-hotels_city-results"]/li'))).click()#выбираем наш вариант из списка
     #browser.find_element_by_id('submit').click()# нажимаем кнопку поиск
     wait.until(EC.visibility_of_element_located((By.ID,'submit'))).click()# нажимаем кнопку поиск
