@@ -12,22 +12,20 @@ try:
     browser.get(link)
     browser.set_window_size(1500, 1000) # размер окна 1500х1000
 
-    wait = WebDriverWait(browser, 2)
-    wait.until(EC.visibility_of_element_located((By.LINK_TEXT, "Login"))).click() # переходим на страницу логина
-    browser.find_element_by_name('email').send_keys("user@phptravels.com") # вводим логин. поиск через name 
+    wait = WebDriverWait(browser, 3)
+    wait.until(EC.visibility_of_element_located((By.LINK_TEXT, "Login"))).click() #переходим на страницу логина
+    browser.find_element_by_name('email').send_keys("user@phptravels.com")#вводим логин. поиск через name 
     browser.find_element_by_name('password').send_keys("demouser") # вводим пароль. поиск через name 
-    browser.find_element_by_xpath("//form/div[3]/button").click() # логинимся. поиск через xpath
+    browser.find_element_by_xpath("//form/div[3]/button").click()#логинимся. поиск через xpath
     browser.find_element_by_link_text('Hotels').click()
-    city = wait.until(EC.visibility_of_element_located((By.ID, 'select2-hotels_city-container'))).click() # наводим курсор в строку поиска
-    
-    
-    pyautogui.typewrite('Dubai')# вводим город 
-    time.sleep(1)
-    res_search = browser.find_element_by_id("select2-hotels_city-results")#выбираем наш вариант из списка
-    res_search.click()
+    browser.find_element_by_xpath('//*[@id="select2-hotels_city-container"]').click() # наводим курсор в строку поиска
+    browser.find_element_by_xpath('//span[1]/input').send_keys("Dubai" + Keys.ENTER) # вводим город в строку поиска
 
-    clk_search = browser.find_element_by_id('submit')# нажимаем кнопку поиск
-    clk_search.click()
+    time.sleep(1)
+    wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="select2-hotels_city-results"]/li'))).click()#выбираем наш вариант из списка
+    #browser.find_element_by_id('submit').click()# нажимаем кнопку поиск
+    wait.until(EC.visibility_of_element_located((By.ID,'submit'))).click()# нажимаем кнопку поиск
+
     
     #скрол вниз страницы
     element = browser.find_element_by_class_name('info__title') 
