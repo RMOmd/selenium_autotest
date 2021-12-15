@@ -21,7 +21,7 @@ try:
     browser.find_element_by_xpath('//*[@id="select2-hotels_city-container"]').click() # наводим курсор в строку поиска
     browser.find_element_by_xpath('//span[1]/input').send_keys("Dubai" + Keys.ENTER) # вводим город в строку поиска
 
-    time.sleep(1) # переработал код до этого момента.... этот слип не могу заменить... не вижу пока варианты... буду искать...
+    time.sleep(1) # этот слип не могу заменить... не вижу вариантов...
     wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="select2-hotels_city-results"]/li'))).click()#выбираем наш вариант из списка
     #browser.find_element_by_id('submit').click()# нажимаем кнопку поиск
     wait.until(EC.visibility_of_element_located((By.ID,'submit'))).click()# нажимаем кнопку поиск
