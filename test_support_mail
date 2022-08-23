@@ -1,0 +1,40 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
+
+def wait_of_element(xpath, driver):
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.XPATH, xpath)
+        )
+    )
+    return element
+
+def test_support_mail():
+    options = webdriver.ChromeOptions()
+    prefs = {"profile.default_content_setting_values.notifications": 2}
+    options.add_experimental_option("prefs", prefs)
+    options.add_argument(f"--user-data-dir=C:/Users/ДанилаСан/AppData/Local/Google/Chrome/User Data")
+    driver = webdriver.Chrome(options=options, executable_path=r'E:/selenium/chromedriver.exe')
+    driver.get("https://polbox.tv/en/support/help/")
+
+    name_input = wait_of_element(xpath='//*[@id="customerName"]', driver=driver)
+    email_input = wait_of_element(xpath='//*[@id="customerEmail"]', driver=driver)
+    title_input = wait_of_element(xpath='//*[@id="title"]', driver=driver)
+    departament_input = wait_of_element(xpath='//*[@id="idDepartment"]/option[2]', driver=driver)
+    message_input = wait_of_element(xpath='//*[@id="body"]', driver=driver)
+
+    name_input.send_keys('polboxcustomer')
+    email_input.send_keys("polboxcustomer@gmail.com")
+    title_input.send_keys("polQ12345")
+    departament_input.click()
+    message_input.send_keys("polQ12345")
+
+    time.sleep(15)    
+
+if __name__ == '__main__':
+    test_support_mail()
