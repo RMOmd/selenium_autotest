@@ -103,8 +103,13 @@ def test_support_phone():
     #accept_button.click()
     input_phone.send_keys("77728828")
     next_button.click()
-
-    time.sleep(1)
+    
+    we_in_cabinet = wait_of_element(xpath='//*[@id="f7b6d3c7a67a1384c480f15d4141ce53"]/ul[1]/li[3]/h4', driver=driver)
+    if we_in_cabinet.text == "Step 3. confirm your phone number":
+        print("Login by E-mail Succesful")
+    else:
+        print("Login by E-mail failed")
+    time.sleep(5)
 
 if __name__ == '__daily_check2__':
     test_support_phone()
