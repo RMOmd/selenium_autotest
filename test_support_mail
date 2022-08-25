@@ -48,12 +48,15 @@ def test_support_email():
     # login_button2.click()
     #
     #
-    # we_in_cabinet = wait_of_element(xpath='//*[@id="headingOne"]/h4', driver=driver)  # Проверка, что мы в личном кабинете
-    # if we_in_cabinet.text == "Contact information":
-    #     print("Login Succesful")
-    # else:
-    #     print("Login FAILED!!!!!!!!!!!!!!!")
-    # time.sleep(1)
+
+    driver.get("https://mail.google.com/mail/u/0/?ogbl#inbox")
+    we_in_cabinet = wait_of_element(xpath='//*[@id=":29"]/span/span', driver=driver)  # Проверка, что мы получили письмо
+    if we_in_cabinet.text == "PolBox.TV":
+        print("\nE-mail recieved")
+    else:
+        print("\nE-mail recieving FAILED!!!!!!!!!!!!!!!")
+    time.sleep(1)
+    
     # # Logout from account
     # logout_button = wait_of_element(xpath='//*[@id="profile"]//div/a[7]', driver=driver)
     # logout_button.click()
