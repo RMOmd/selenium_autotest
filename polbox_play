@@ -135,7 +135,7 @@ def test_adding_channel_to_favorites():
     wait = WebDriverWait(driver, 10)
     channel_remove = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="root"]/div/div/div/div[2]/div[1]'))) # Наводим курсор на канал
     ActionChains(driver).move_to_element(channel_remove).perform()
-    remove_button = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="root"]//div[1]/div[3]/button')))# Жмем добавить канал в избранное
+    adding_button = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="root"]//div[1]/div[3]/button')))# Жмем добавить канал в избранное
     ActionChains(driver).move_to_element(remove_button).click().perform()
     channel_name = wait_of_element(xpath='//*[@id="root"]//div[2]/div[1]/div[2]/div[1]/div', driver=driver) # Находим и запоминаем имя канала
     first_name = str(channel_name.text)
