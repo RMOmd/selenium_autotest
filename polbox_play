@@ -64,3 +64,59 @@ def test_adding_to_bookmarks():
 
 if __name__ == '__main__':
     test_adding_to_bookmarks()
+
+
+def test_adding_movies_to_bookmarks():
+    options = webdriver.ChromeOptions()
+    prefs = {"profile.default_content_setting_values.notifications": 2}
+    options.add_experimental_option("prefs", prefs)
+    options.add_argument(f"--user-data-dir=C:/Users/ДанилаСан/AppData/Local/Google/Chrome/User Data")
+    driver = webdriver.Chrome(options=options, executable_path=r'E:/selenium/chromedriver.exe')
+    driver.get("http://play.polbox.tv/#/movies")
+    print("\nОткрыта страница Succesful")
+
+    movie_name = wait_of_element(xpath='//*[@id="root"]//div[1]/div/div/div/h2', driver=driver) # Находим и запоминаем имя movie
+    first_name = str(movie_name.text)
+    print(first_name)
+    choose_watch_1 = wait_of_element(xpath='//*[@id="root"]//div[1]/div/div/div/div[3]/button[1]', driver=driver) # Жмем смотреть 1 раз
+    time.sleep(2)
+    choose_watch_1.click()
+
+    choose_watch_2 = wait_of_element(xpath='//*[@id="root"]//div[4]//button[1]', driver=driver) # Жмем смотреть 2 раз
+    choose_watch_2.click()
+
+    pause_watch = wait_of_element(xpath='//*[@id="root"]//div[1]/video', driver=driver) # Ставим на паузу
+    pause_watch.click()
+
+    movie_to_bookmarks = wait_of_element(xpath='//*[@id="root"]//div[2]/button[2]', driver=driver) # Жмем добавить в закладки
+    movie_to_bookmarks.click()
+    print("добавили в закладки")
+
+    back_button = wait_of_element(xpath='//*[@id="root"]//div[2]/button[1]', driver=driver)# Жмем назад кнопку
+    back_button.click()
+
+    bookmarks_button = wait_of_element(xpath='//*[@id="root"]//header//button[4]', driver=driver)# Переход в закладки
+    bookmarks_button.click()
+    print("переход в закладки")
+    time.sleep(1)
+
+    movie_in_bookmarks = wait_of_element(xpath='//*[@id="root"]//div[3]/div[1]', driver=driver) # Находим и проверяем имя канала в закладках
+    second_name = str(movie_in_bookmarks.text)
+    print(second_name)
+    if first_name == second_name:
+        print("Adding movies to bookmarks Succesful")
+    else:
+        print("Adding movies to bookmarks FAILED!!!")
+
+    wait = WebDriverWait(driver, 10)
+    channel_remove = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="root"]//div/div[3]'))) # Наводим курсор на кино в закладках
+    ActionChains(driver).move_to_element(channel_remove).perform()
+    remove_button = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="root"]//div[6]/button/span')))# Жмем удалить кино из закладок
+    ActionChains(driver).move_to_element(remove_button).click().perform()
+
+    yes_button = wait_of_element(xpath='/html/body//div[3]//div[2]/button[1]', driver=driver)# Жмем да
+    yes_button.click()
+    print('Deleting from bookmarks Succesful')
+
+if __name__ == '__main__':
+    test_adding_movies_to_bookmarks()
