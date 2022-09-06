@@ -108,35 +108,45 @@ if __name__ == '__test_news_checker__':
     
  *************************************   считает и проверяет картинки
     
-    URL = "http://play.polbox.tv/#/live/1762"
-
-    # choose_channel = wait_of_element(xpath='//*[@id="root"]//div[2]/div[1]/div[2]/div[1]',
-    #                                  driver=driver)  # Выбираем канал
-    # choose_channel.click()
-    # time.sleep(1)
-    channel_name = wait_of_element(xpath='//*[@class="archiveCarBlock"]/div',
-                                   driver=driver)  # Находим и запоминаем имя канала
-    first_name = channel_name.get_attribute('background')
+        urlList = []
 
 
-    iBrokenImageCount = 0
-    image_list = driver.find_elements(By.XPATH, '//*[@class="archiveCarBlock"]/div')
-    print('Total number of images are ' + str(len(image_list)))
+    with open('list.txt', 'r') as f:
+        for i in f:
+            urlList.append(i)
 
-    for img in image_list:
-        try:
-            response = requests.get(img.get_attribute('background'), stream=True)
-            if (response.status_code != 200):
-                print(img.get_attribute('outerHTML') + " is broken.")
-                iBrokenImageCount = (iBrokenImageCount + 1)
+    # navigate to URL
+    for i in urlList:
+        print(i)
+        driver.get(i)
+        driver.implicitly_wait(2)
 
-        except requests.exceptions.MissingSchema:
-            print("Encountered MissingSchema Exception")
-        except requests.exceptions.InvalidSchema:
-            print("Encountered InvalidSchema Exception")
-        except:
-            print("Encountered Some other Exception")
-    print('The page has ' + str(iBrokenImageCount) + ' broken images')
+    #driver.get("http://play.polbox.tv/#/live/1555")
+
+        print("\nОткрыта страница Successful")
+
+
+        iBrokenImageCount = 0
+        image_list = driver.find_elements(By.XPATH, '//*[@class="archiveCarBlock"]/div')
+        print('Total number of images are ' + str(len(image_list)))
+
+        for img in image_list:
+            try:
+                response = requests.get(img.get_attribute('background'), stream=True)
+                if (response.status_code != 200):
+                    print(img.get_attribute('outerHTML') + " is broken.")
+                    iBrokenImageCount = (iBrokenImageCount + 1)
+
+            except requests.exceptions.MissingSchema:
+                print("Encountered MissingSchema Exception")
+            except requests.exceptions.InvalidSchema:
+                print("Encountered InvalidSchema Exception")
+            except:
+                print("Encountered Some other Exception")
+        print('The page has ' + str(iBrokenImageCount) + ' broken images')
+
+    driver.quit()
+
    
     
     
