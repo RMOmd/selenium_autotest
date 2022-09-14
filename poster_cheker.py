@@ -72,13 +72,15 @@ for img in image_list:
             image_address = img.get_attribute("src")
             web_address = image_address.split('/')
             last_part = web_address.pop(-1)[5:]
-            print(last_part)
             second_part = web_address.pop(-1)
-            print(second_part)
             begin_address = 'http://online.polbox.tv/v10/'
             full_address = begin_address + second_part + '/' + last_part
-            print(full_address)
+            for address in full_address:
+                posters_url.append(full_address)
+
+
 
     except requests.exceptions.MissingSchema:
         print("Encountered MissingSchema Exception")
+print(posters_url)
 
