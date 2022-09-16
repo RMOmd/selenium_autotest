@@ -1,45 +1,154 @@
-urlList = [
-        'http://play.polbox.tv/#/live/1762',
-        'http://play.polbox.tv/#/live/1786',
-        'http://play.polbox.tv/#/live/1585',
-        'http://play.polbox.tv/#/live/1495'
-    ]
-
-    # with open('list.txt', 'r') as f:
-    #     for i in f:
-    #         urlList.append(i)
-
-
-
 def check_url(urlList, driver):
     for i in urlList:
-        print(i)
         driver.get(i)
         driver.implicitly_wait(2)
 
-        print("\nОткрыта страница Successful")
-        channel_name = wait_of_element(xpath='//*[@id="root"]/div/div/div/div[1]/div/div[1]/div/div/div',
-                                       driver=driver)  # Находим и запоминаем имя канала (//img/following::div[15])[1]
-        first_name = str(channel_name.text)
-        print(first_name)
-
         iBrokenImageCount = 0
         image_list = driver.find_elements(By.XPATH, '//*[@class="archiveCarBlock"]/div')
-        res_total = print('Total number of images are ' + str(len(image_list)))
+        res_total = print('\nTotal number of images are ' + str(len(image_list)))
 
         for img in image_list:
             try:
                 response = requests.get(img.get_attribute('background'), stream=True)
                 if (response.status_code != 200):
-                    res_broken = print(img.get_attribute('outerHTML') + " is broken.")
+                    res_broken = print(i + " is broken.")
+                    iBrokenImageCount = (iBrokenImageCount + 1)
 
             except requests.exceptions.MissingSchema:
                 print("Encountered MissingSchema Exception")
-            except requests.exceptions.InvalidSchema:
-                print("Encountered InvalidSchema Exception")
-            except:
-                print("Encountered Some other Exception")
-        print('The page has ' + str(iBrokenImageCount) + ' broken images')
+                iBrokenImageCount = (iBrokenImageCount + 1)
+        #print('The page has ' + str(iBrokenImageCount) + ' broken images')
         driver.refresh()
-    driver.quit()
+    #driver.quit()
     return res_total
+
+def posters_checker(driver):
+    iBrokenImageCount = 0
+    posters_url = []
+    time.sleep(5)
+    image_list = driver.find_elements(By.TAG_NAME, "img")
+    print('Total number of images are ' + str(len(image_list)))
+    for img in image_list:
+        try:
+            response = requests.get(img.get_attribute('src'), stream=True)
+            if (response.status_code == 200):  # != 200):
+                image_address = img.get_attribute("src")
+                web_address = image_address.split('/')
+                last_part = web_address.pop(-1)[5:]
+                second_part = web_address.pop(-1)
+                server_name = web_address.pop(-2)
+                begin_address = 'http://online.polbox.tv/'
+                full_address = begin_address + server_name + '/' + second_part + '/' + last_part
+                posters_url.append(full_address)
+        except requests.exceptions.MissingSchema:
+            print("Encountered MissingSchema Exception")
+    posters_url.pop(0)
+    return posters_url
+
+
+def test_posters_animations():
+    #region Browser settings
+    options = webdriver.ChromeOptions()
+    prefs = {"profile.default_content_setting_values.notifications": 2}
+    options.add_experimental_option("prefs", prefs)
+    options.add_argument(f"--user-data-dir=C:/Users/RMO/AppData/Local/Google/Chrome/User Data")
+    options.add_argument("javascript.enabled")
+    #options.headless = True
+    driver = webdriver.Chrome(options=options, executable_path=r'D:/Selenium/chromedriver.exe')
+    #endregion
+    URL = "http://play.polbox.tv/#/genre/23?title=Western"
+    driver.get(URL)
+
+    #login_play_polbox('12437121', '472790', driver=driver)
+
+#     url_listing = [
+#         'http://play.polbox.tv/#/genre/23?title=Western',
+#         'http://play.polbox.tv/#/genre/17?title=Muzyczny'
+#     ]
+#
+# ''' test'''
+#     def check_poster_size(url, driver):
+#         i = 20 # листает страницу вниз
+#         while i < 2100:
+#             try:
+#                 xpath_id = '//*[@id="root"]//div[' + str(i) + ']/div/h6'
+#                 catalog_items_more = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, xpath_id)))
+#                 webdriver.ActionChains(driver).move_to_element(catalog_items_more).perform()
+#                 i = i + 10
+#                 time.sleep(1)
+#         # element = driver.find_elements(By.XPATH, xpath_id)
+#         # if len(element):
+#         #     print("element is present")
+#         # else:
+#         #     break
+#             except TimeoutException:
+#                 break
+#
+# # Скачивает картинки и проверяет их на размер менее 500 пикселей
+#         for i in posters_checker(driver=driver): # проверка постеров на размер менее 500
+#             try:
+#                 response = requests.get(i)
+#                 if (response.status_code == 200):
+#                     h = httplib2.Http('.cache')
+#                     response, content = h.request(i)
+#                     out = open('img.png', 'wb')
+#                     out.write(content)
+#                     out.close()
+#                     im = Image.open('img.png')
+#                     w, h = im.size
+#             #print('width: ', w)
+#             #print('height:', h)
+#                     if w < 500:
+#                     #global small_poster
+#                         small_poster = i
+#                 else:
+#                     continue
+#             except requests.exceptions.MissingSchema:
+#                 print("Encountered MissingSchema Exception")
+#         return print(small_poster)
+#
+#     for u in url_listing:
+#         check_poster_size(u, driver=driver)
+
+
+    i = 20 # листает страницу вниз  working
+    while i < 2100:
+        try:
+            xpath_id = '//*[@id="root"]//div[' + str(i) + ']/div/h6'
+            catalog_items_more = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, xpath_id)))
+            webdriver.ActionChains(driver).move_to_element(catalog_items_more).perform()
+            i = i + 10
+            time.sleep(1)
+        # element = driver.find_elements(By.XPATH, xpath_id)
+        # if len(element):
+        #     print("element is present")
+        # else:
+        #     break
+        except TimeoutException:
+            break
+
+# Скачивает картинки и проверяет их на размер менее 500 пикселей
+    for i in posters_checker(driver=driver): # проверка постеров на размер менее 500
+        try:
+            response = requests.get(i)
+            if (response.status_code == 200):
+                h = httplib2.Http('.cache')
+                response, content = h.request(i)
+                out = open('img.png', 'wb')
+                out.write(content)
+                out.close()
+                im = Image.open('img.png')
+                w, h = im.size
+            #print('width: ', w)
+            #print('height:', h)
+                if w < 500:
+                    print(i)
+            else:
+                continue
+        except requests.exceptions.MissingSchema:
+            print("Encountered MissingSchema Exception")
+
+    driver.quit()
+if __name__ == '__main__':
+    test_posters_animations()
+    
