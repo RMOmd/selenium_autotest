@@ -1,23 +1,36 @@
-movie_button = wait_of_element(xpath='//*[@id="root"]/div/header/div/div/div[1]/button[2]', driver=driver).click()
-catalog_items_more = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '(//*[@id="root"]//div[1]/button)[8]')))
-webdriver.ActionChains(driver).move_to_element(catalog_items_more).perform()
-animation_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[8]', driver=driver).click()
 
-biografic_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[9]', driver=driver).click()
-documentaln_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[10]', driver=driver).click()
-dramatic_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[11]', driver=driver).click()
-semeinii_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[12]', driver=driver).click()
-fantastic_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[13]', driver=driver).click()
-istoric_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[14]', driver=driver).click()
-horror_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[15]', driver=driver).click()
-action_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[16]', driver=driver).click()
-comedy_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[17]', driver=driver).click()
-criminal_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[18]', driver=driver).click()
-malodrama_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[19]', driver=driver).click()
-music_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[20]', driver=driver).click()
-prikluchenia_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[21]', driver=driver).click()
-serial_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[22]', driver=driver).click()
-sport_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[23]', driver=driver).click()
-triller_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[24]', driver=driver).click()
-western_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[25]', driver=driver).click()
-voennii_movie = wait_of_element(xpath='(//*[@id="root"]//div[1]/button)[26]', driver=driver).click()
+login_play_polbox('12437121', '472790', driver=driver)
+
+# #region Search check
+# movie = '90 minutes'
+# search_butt = wait_of_element(xpath='(//button)[6]', driver=driver).click()
+# time.sleep(2)
+# input_field = wait_of_element(xpath='(//input)[1]', driver=driver).send_keys(movie)
+# time.sleep(4)
+#
+# search_res = wait_of_element(xpath='//h6', driver=driver).text
+# print(search_res)
+#
+# assert search_res == '90 minut w niebie'
+# #endregion
+
+settings_butt = wait_of_element(xpath='//*[@id="root"]/div/header/div/div/div[2]/button', driver=driver).click()
+
+parent_code = wait_of_element(xpath="//div[text()='Parental Manager']", driver=driver).click()
+time.sleep(1)
+parent_code_butt = wait_of_element(xpath='(//input)[2]', driver=driver)
+parent_code_butt.click()
+time.sleep(1)
+parent_code_butt.send_keys(1)
+time.sleep(1)
+conform_butt = wait_of_element(xpath='(//button)[12]', driver=driver).click()
+time.sleep(2)
+
+change_pass = wait_of_element(xpath='//*[@id="root"]/div/div/div/div[1]/button[3]', driver=driver).click() # все работает до этого момента
+old_pass = wait_of_element(xpath='(//input)[2]', driver=driver).click()
+time.sleep(1)
+change_pass.send_keys(1)
+new_pass = wait_of_element(xpath='(//input)[3]', driver=driver).click()
+time.sleep(1)
+new_pass.send_keys(1)
+new_pass_conf = wait_of_element(xpath='(//input)[4]', driver=driver).click().send_keys(1)
