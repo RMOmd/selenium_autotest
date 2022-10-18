@@ -108,3 +108,40 @@ def test_posters_size_checker():
     driver.quit()
 if __name__ == '__main__':
     test_posters_size_checker()
+    
+    
+    
+    
+    
+    
+    
+film_categories = { "(//button[text()='Show all'])[3]": "Animowany",
+                    "(//button[text()='Show all'])[4]": "Biograficzny",
+                    "(//button[text()='Show all'])[5]": "Dokumentalny",
+                    "(//button[text()='Show all'])[6]": "Dramat",
+                    "(//button[text()='Show all'])[7]": "Familijny",
+                    "(//button[text()='Show all'])[8]": "Fantastyczny",
+                    "(//button[text()='Show all'])[9]": "Historyczny",
+                    "(//button[text()='Show all'])[10]": "Horror",
+                    "(//button[text()='Show all'])[11]": "Kino Akcji",
+                    "(//button[text()='Show all'])[12]": "Komedia",
+                    "(//button[text()='Show all'])[13]": "Kryminalny",
+                    "(//button[text()='Show all'])[14]": "Melodramat",
+                    "(//button[text()='Show all'])[15]": "Muzyczny",
+                    "(//button[text()='Show all'])[16]": "Przygodowy",
+                    "(//button[text()='Show all'])[17]": "Serial",
+                    "(//button[text()='Show all'])[18]": "Sportowy",
+                    "(//button[text()='Show all'])[19]": "Thriller",
+                    "(//button[text()='Show all'])[20]": "Western",
+                    "(//button[text()='Show all'])[21]": "Wojenny"}
+
+movies_butt = wait_of_element(xpath="//button[text()='Movies']", driver=driver).click()
+
+i = 1
+for i in film_categories:
+
+    movie_butt = wait_of_element(xpath=i, driver=driver)
+    #categori_name = film_categories.values(i)
+    i = int(i) + 1
+    print(i)
+
