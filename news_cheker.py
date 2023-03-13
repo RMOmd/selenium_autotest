@@ -147,6 +147,38 @@ if __name__ == '__test_news_checker__':
 
     driver.quit()
 
-   
+    
+    ======================================================================== egghunter
+    
+driver = webdriver.Chrome(options=options, executable_path=r'h:/Selenium/chromedriver.exe')
+driver.get("https://develop:develop2016@dev.polbox.tv/en/customers/signin/")
+
+cockie_accept = driver.find_element(By.ID, "cookiesAgreement").click()
+
+
+enter_login = driver.find_element(By.ID, 'email')
+enter_login.clear()
+enter_login.send_keys('polboxcustomer@gmail.com')
+enter_pass = driver.find_element(By.ID, 'pass')
+enter_pass.clear()
+enter_pass.send_keys('polQ12345')
+sign_button = driver.find_element(By.CLASS_NAME, "button").click()
+
+i = 0
+while i <= 10:
+    i = i + 1
+    try:
+        driver.implicitly_wait(30) # seconds
+        eggs = driver.find_element(By.XPATH, "//*[contains(@src, 'img/eggs')]").click()
+
+    except:
+        time.sleep(3)
+        driver.refresh()
+        continue
+
+
+time.sleep(5)
+driver.quit()
+
     
     
